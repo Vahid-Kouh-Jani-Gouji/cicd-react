@@ -4,5 +4,5 @@ module "s3-website" {
 }
 
 output "name" {
-  value = module.s3-website.name
+  value = module.s3-website.names3
 }

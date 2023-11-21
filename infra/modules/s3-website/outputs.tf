@@ -3,6 +3,6 @@ output "bucket_arn" {
 }
 
 
-output "name" {
+output "names3" {
   value = aws_s3_bucket.this.bucket
 }
