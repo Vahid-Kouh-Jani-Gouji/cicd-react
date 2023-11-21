@@ -44,5 +44,5 @@ jobs:
         if: steps.terraform.outcome == 'success'
       - name: AWS S3 Sync
         run: aws s3 sync --region eu-central-1 ./build s3://$S3_BUCKET_ARN/ --profile default
-        if: env.S3_BUCKET_ARN != ''
+       
         
