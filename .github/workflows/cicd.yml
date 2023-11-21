@@ -43,6 +43,6 @@ jobs:
         run: echo "S3_BUCKET_ARN=${{ steps.terraform.outputs.bucket_arn }}" >> $GITHUB_ENV
         if: steps.terraform.outcome == 'success'
       - name: AWS S3 Sync
-        run: aws s3 sync --region eu-central-1 ./build $S3_BUCKET_ARN/ --profile default
-        if: env.S3_BUCKET_ARN != ''
+        run: aws s3 sync --region eu-central-1 ./build ${{ needs.get_s3_bucket_arn.outputs.s3_bucket_arn }}/ --profile default
+        if: steps.get_s3_bucket_arn.outputs.s3_bucket_arn != ''
         
