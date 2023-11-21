@@ -36,13 +36,16 @@ jobs:
       - run: terraform -chdir=./infra init 
       - run: terraform -chdir=./infra validate
       - run: terraform -chdir=./infra apply -auto-approve
-        id: terraform  # You can set an explicit ID for the step
-
+        id: terraform
+      
+      - name: Debug Terraform Output
+        run: |
+          echo "Terraform Output: ${{ steps.terraform.outputs.name }}"
+        if: steps.terraform.outcome == 'success'
       - name: Get S3 Bucket Name
         id: get_s3_bucket_name
         run: echo "::set-output name=s3_bucket_name::${{ steps.terraform.outputs.name }}"
         if: steps.terraform.outcome == 'success'
-
-      - name: AWS S3 Sync
-        run: aws s3 sync --region eu-central-1 ./build s3://${{ needs.get_s3_bucket_name.outputs.s3_bucket_name }}/ --profile default
-       
+      - name: Debug AWS S3 Sync Command
+        run: echo "aws s3 sync --region eu-central-1 ./build s3://${{ needs.get_s3_bucket_name.outputs.s3_bucket_name }}/ --profile default"
+      
