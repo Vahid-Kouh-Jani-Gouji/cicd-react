@@ -42,3 +42,9 @@ jobs:
         id: get_s3_bucket_arn
         run: echo "::set-output name=s3_bucket_arn::${{ steps.terraform.outputs.bucket_arn }}"
         if: steps.terraform.outcome == 'success'
+      - name: Debug Outputs
+        run: |
+          echo "Bucket ARN: ${{ needs.get_s3_bucket_arn.outputs.s3_bucket_arn }}"
+          env
+        if: steps.get_s3_bucket_arn.outputs.s3_bucket_arn != ''
+      
