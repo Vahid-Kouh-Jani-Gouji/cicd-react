@@ -4,5 +4,5 @@ output "bucket_arn" {
 
 
 output "name" {
-  value = aws_s3_bucket.this.name
+  value = aws_s3_bucket.this.bucket
 }
