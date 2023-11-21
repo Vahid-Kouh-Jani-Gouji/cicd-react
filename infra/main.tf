@@ -4,5 +4,5 @@ module "s3-website" {
 }
 
 output "name" {
-  value = aws_S3_bucket.this.name
+  value = aws_s3_bucket.this.name
 }
