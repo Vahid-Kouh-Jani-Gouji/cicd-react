@@ -36,13 +36,12 @@ jobs:
       - run: terraform -chdir=./infra init 
       - run: terraform -chdir=./infra validate
       - run: terraform -chdir=./infra apply -auto-approve
-        id: terraform
-      
-      - name: Get S3 Bucket ARN
-        id: get_s3_bucket_arn
-        run: echo "S3_BUCKET_NAME=${{ steps.terraform.outputs.names3 }}" >> $GITHUB_ENV
-        if: steps.terraform.outcome == 'success'
-      - name: AWS S3 Sync
-        run: aws s3 sync --region eu-central-1 ./build  s3://"${{ steps.terraform.outputs.names3 }}"/ --profile default
-       
+      - name: run s3-sync on prod
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read --follow-symlinks --delete 
+        
+        env:
+          AWS_S3_BUCKET: ${{ secrets.BUCKET_NAME }}
+          SOURCE_DIR: './build'
         
