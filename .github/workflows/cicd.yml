@@ -24,13 +24,13 @@ jobs:
       - run: npm test
       - id: install-aws-cli
         uses: unfor19/install-aws-cli-action@v1
-      # - run: mkdir -p ~/.aws/
-      # - run: echo "$super_secret" > ~/.aws/credentials
-      #   env: # Or as an environment variable
-      #     super_secret: ${{ secrets.AWS_CONFIG }}
-      # - run: cat ~/.aws/credentials
+      - run: mkdir -p ~/.aws/
+      - run: echo "$super_secret" > ~/.aws/credentials
+        env: # Or as an environment variable
+          super_secret: ${{ secrets.AWS_CONFIG }}
+      - run: cat ~/.aws/credentials
       - run: aws configure list-profiles
-      - run: aws s3 ls --region eu-central-1 --profile Spassvogel
+      - run: aws s3 ls --region eu-central-1 --profile default
       - uses: hashicorp/setup-terraform@v2
       - run: terraform version
       - run: terraform -chdir=./infra init
