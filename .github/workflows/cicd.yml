@@ -48,4 +48,4 @@ jobs:
         if: steps.terraform.outcome == 'success'
       - name: Debug AWS S3 Sync Command
         run: echo "aws s3 sync --region eu-central-1 ./build s3://${{ needs.get_s3_bucket_name.outputs.s3_bucket_name }}/ --profile default"
-      
+      - run: aws s3 sync --region eu-central-1 ./build s3://${{ needs.get_s3_bucket_name.outputs.s3_bucket_name }}/ --profile default

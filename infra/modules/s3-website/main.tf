@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "this" {
-  bucket = var.bucket_name
+  bucket = "my-website-cicd-github2023" #var.bucket_name
 
   tags = {
     Name        = "My lovely website"
