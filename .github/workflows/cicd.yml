@@ -38,14 +38,7 @@ jobs:
       - run: terraform -chdir=./infra apply -auto-approve
         id: terraform
       
-      - name: Debug Terraform Output
-        run: |
-          echo "Terraform Output: ${{ steps.terraform.outputs.names3 }}"
+      - name: Get S3 Bucket ARN
+        id: get_s3_bucket_arn
+        run: echo "::set-output name=s3_bucket_arn::${{ steps.terraform.outputs.bucket_arn }}"
         if: steps.terraform.outcome == 'success'
-      - name: Get S3 Bucket Name
-        id: get_s3_bucket_name
-        run: echo "::set-output name=s3_bucket_name::${{ steps.terraform.outputs.names3}}"
-        if: steps.terraform.outcome == 'success'
-      - name: Debug AWS S3 Sync Command
-        run: echo "aws s3 sync --region eu-central-1 ./build s3://${{ needs.get_s3_bucket_name.outputs.s3_bucket_name }}/ --profile default"
-      - run: aws s3 sync --region eu-central-1 ./build s3://${{ needs.get_s3_bucket_name.outputs.s3_bucket_name }}/ --profile default
