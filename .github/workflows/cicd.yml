@@ -33,7 +33,11 @@ jobs:
       - run: aws s3 ls --region eu-central-1 --profile default
       - uses: hashicorp/setup-terraform@v2
       - run: terraform version
-      - run: terraform -chdir=./infra init
+      - run: terraform -chdir=./infra init 
       - run: terraform -chdir=./infra validate
       - run: terraform -chdir=./infra apply -auto-approve
-      - run: aws s3 sync --region eu-central-1 ./build s3://my-website-cicd-github2023/  --profile default
+      - name: Get S3 Bucket Name
+        id: get_s3_bucket_name
+        run: echo "::set-output name=s3_bucket_name::$(terraform output s3_bucket_name)"
+
+      - run: aws s3 sync --region eu-central-1 ./build ${{ steps.get_s3_bucket_name.outputs.s3_bucket_name }}  --profile default
