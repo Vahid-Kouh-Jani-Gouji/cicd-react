@@ -14,7 +14,7 @@ terraform {
   backend "s3" {
     bucket         = "terraformBackendVahid2023"
     key            = "terraform.tfstate"
-    region         = var.region
+    region         = "eu-central-1"
     encrypt        = true
     dynamodb_table = "terraform_locks"
   }
