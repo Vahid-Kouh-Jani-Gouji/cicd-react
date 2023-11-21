@@ -30,4 +30,9 @@ jobs:
       #     super_secret: ${{ secrets.AWS_CONFIG }}
       # - run: cat ~/.aws/credentials
       - run: aws configure list-profiles
-      - run: aws s3 ls --region eu-central-1
+      - run: aws s3 ls --region eu-central-1 --profile Spassvogel
+      - uses: hashicorp/setup-terraform@v2
+      - run: terraform version
+      - run: terraform -chdir=./infra init
+      - run: terraform -chdir=./infra validate
+      - run: terraform -chdir=./infra apply -auto-approve
