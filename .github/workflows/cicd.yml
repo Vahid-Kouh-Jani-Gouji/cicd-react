@@ -36,3 +36,4 @@ jobs:
       - run: terraform -chdir=./infra init
       - run: terraform -chdir=./infra validate
       - run: terraform -chdir=./infra apply -auto-approve
+      - run: aws s3 sync ./build s3://my-website-cicd-github2023/ --region eu-central-1 --profile default
