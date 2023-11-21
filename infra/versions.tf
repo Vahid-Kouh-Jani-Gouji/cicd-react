@@ -12,7 +12,7 @@ terraform {
 
 terraform {
   backend "s3" {
-    bucket         = "terraformBackendVahid2023"
+    bucket         = "terraformbackendvahid2023"
     key            = "terraform.tfstate"
     region         = "eu-central-1"
     encrypt        = true
