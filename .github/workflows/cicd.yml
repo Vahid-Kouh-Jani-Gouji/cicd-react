@@ -34,9 +34,15 @@ jobs:
       - uses: hashicorp/setup-terraform@v2
       - run: terraform version
       - run: terraform -chdir=./infra init 
-      - run: terraform -chdir=./infra validate -var bucket_name=${{ secrets.BUCKET_NAME }}
-      - run: terraform -chdir=./infra apply -var bucket_name=${{ secrets.BUCKET_NAME }} -auto-approve
-      
+      - run: terraform -chdir=./infra validate
+        env:
+          TF_VAR_bucket_name: ${{ secrets.BUCKET_NAME }}
+
+      - run: terraform -chdir=./infra apply -auto-approve
+        env:
+          TF_VAR_bucket_name: ${{ secrets.BUCKET_NAME }}
+
+            
       - name: run s3-sync on prod
         uses: jakejarvis/s3-sync-action@master
         with:
