@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "this" {
-  bucket = "my-website-cicd-github2023" #var.bucket_name
+  bucket = var.bucket_name
 
   # Allow deletion of non-empty bucket
   force_destroy = true
